@@ -38,7 +38,7 @@ class _IndexPageState extends State<IndexPage> {
     ),
   ];
 
-  final List tabBodies = [
+  final List<Widget> tabBodies = [
     HomePage(),
     CatePage(),
     CartPage(),
@@ -50,7 +50,7 @@ class _IndexPageState extends State<IndexPage> {
 
   @override
   void initState() {
-    currentPage =tabBodies[currentIndex];
+    // currentPage =tabBodies[currentIndex];
     super.initState();
   }
 
@@ -67,11 +67,14 @@ class _IndexPageState extends State<IndexPage> {
         onTap: ( index ){
           setState(() {
            currentIndex = index;
-           currentPage =tabBodies[index]; 
+          //  currentPage =tabBodies[index]; 
           });
         },
       ),
-      body: currentPage,
+      body: IndexedStack(
+        index: currentIndex,
+        children: tabBodies,
+      )
     );
   }
 }
