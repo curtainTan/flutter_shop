@@ -25,6 +25,11 @@ class _CatePageState extends State<CatePage> {
       body: Row(
         children: <Widget>[
           LeftCategory(),
+          Column(
+            children: <Widget>[
+              RightC()
+            ],
+          )
         ],
       )
     );
@@ -97,4 +102,51 @@ class _LeftCategoryState extends State<LeftCategory> {
   }
 }
 
+
+
+
+// 右边的导航
+
+class RightC extends StatefulWidget {
+  _RightCState createState() => _RightCState();
+}
+
+class _RightCState extends State<RightC> {
+
+  List items = ["名酒", "宝丰", "北京二锅头", "五粮液", "剑南春", "江小白"];
+
+  Widget _Item( String item ){
+    return InkWell(
+      onTap: (){},
+      child: Container(
+        padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
+        child: Text(
+          item,
+          style: TextStyle( fontSize: ScreenUtil().setSp(28) ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: ScreenUtil().setHeight(80),
+      width: ScreenUtil().setWidth(570),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          bottom: BorderSide( width: 1, color: Colors.black12 )
+        )
+      ),
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: items.length,
+        itemBuilder: ( context, index ){
+          return _Item( items[index] ); 
+        },
+      ),
+    );
+  }
+}
 
