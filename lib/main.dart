@@ -4,15 +4,17 @@ import 'package:provide/provide.dart';
 
 import './provider/counter.dart';
 import './provider/child_category.dart';
-
+import './provider/category_goods_list.dart';
 
 void main(){
 
   var counter =Counter();
   var childcategory =ChildCategory();
   var providers = Providers();
+  var categoryGoodsList =CategoryGoodsProvide();
   providers..provide( Provider<Counter>.value(counter) )
   ..provide( Provider<ChildCategory>.value(childcategory) )
+  ..provide( Provider< CategoryGoodsProvide >.value( categoryGoodsList ) )
   ;
 
   runApp( ProviderNode( child: MyApp(), providers: providers, ) );
