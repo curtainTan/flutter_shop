@@ -11,6 +11,12 @@ class CategoryGoodsProvide with ChangeNotifier {
     goodslist = list;
     notifyListeners();
   }
+
+  // 获取更多
+  getMoreList( List<CategoryListData> list ){
+    goodslist.addAll(list);
+    notifyListeners();
+  }
   
 }
 
