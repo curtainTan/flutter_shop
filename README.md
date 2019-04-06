@@ -29,3 +29,10 @@
 
 
 ### 更新到36集
+
+
+### 更新到45集
+
+详情页面
+
+<img src="./img/xiangqing.png" width="400" >

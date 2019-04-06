@@ -3,7 +3,10 @@ import '../provider/details_info.dart';
 import 'package:provide/provide.dart';
 
 
-
+import './details_page/details_top.dart';
+import './details_page./details_explain.dart';
+import './details_web/details_web.dart';
+import './details_page/detail_tabBar.dart';
 
 class DetailsPage extends StatelessWidget {
   final String goodsId;
@@ -26,10 +29,16 @@ class DetailsPage extends StatelessWidget {
         future: _getBackInfo( context ),
         builder: ( context, snapshot ){
           if( snapshot.hasData ){
+            print("----------->>>snapshot.hasData------${snapshot.hasData}");
             return Container(
-              child: Column(
+              child: ListView(
                 children: <Widget>[
-                  Text("data")
+
+                  DetailTop(),
+                  DetailsExplain(),
+                  DetailsTabBar(),
+                  DetailsWeb(),
+
                 ],
               ),
             );
@@ -41,7 +50,9 @@ class DetailsPage extends StatelessWidget {
     );
   }
 
-  Future _getBackInfo( context ) async {
+  Future _getBackInfo( BuildContext context ) async {
+
+    print("开始获取数据-----------");
 
     await Provide.value<DetailsInfoProvide>(context).getGoodsInfo(goodsId);
     print("加载玩这号--------------------");
@@ -49,8 +60,6 @@ class DetailsPage extends StatelessWidget {
     return "完成加载";
 
   }
-
-
 
 
 }

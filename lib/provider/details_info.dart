@@ -4,16 +4,31 @@ import '../service/service_method.dart';
 import 'dart:convert';
 
 
-
 class DetailsInfoProvide with ChangeNotifier{
   DetailsModel goodsInfo = null;
 
+  bool isLeft = true;
+  bool isRight = false;
 
-  // 从后台获取的数据
-  getGoodsInfo( String id ){
+  changeLandR( String changeState ){
+    if( changeState == 'left' ){
+      isLeft = true;
+      isRight = false;
+    }else{
+      isLeft = false;
+      isRight = true;
+    }
+    notifyListeners();
+  }
+
+
+  // 从后台获取数据
+  getGoodsInfo( String id ) async {
     var formData = { 'goodId' : id };
-    request( 'getGoodDetailById', formData: formData ).then( (res){
+
+    await request( 'getGoodDetailById', formData: formData ).then( (res){
       var responseData = json.decode( res.toString() );
+
       print( responseData );
 
       goodsInfo = DetailsModel.fromJson( responseData );

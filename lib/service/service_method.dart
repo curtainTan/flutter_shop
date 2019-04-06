@@ -49,7 +49,7 @@ Future getHomePageBeloCenten() async{
 // 通用方法
 Future request( url, { formData } ) async {
   try {
-    print("开始获取数据.....");
+    print("service开始获取数据.....");
     Response response;
     Dio dio = Dio();
     dio.options.contentType =ContentType.parse("application/x-www-form-urlencoded");
