@@ -16,6 +16,7 @@ Future getHomePageContent() async{
     var formData = { 'lon': '115.02932', 'lat': '35.76189' };
     response =await dio.post( servicePath['homePageContent'], data: formData );
     if( response.statusCode == 200 ){
+      print("数据获取成功.........");
       return response.data;
     }else{
       throw Exception("端口异常.....");
