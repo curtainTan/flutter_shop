@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provide/provide.dart';
 
 
 import '../../model/cardInfo.dart';
+import './cart_count.dart';
+import 'package:baixing/provider/card.dart';
+
 
 
 class CartItem extends StatelessWidget {
 
   final CardInfoModal item;
   CartItem( this.item );
-
 
   @override
   Widget build(BuildContext context) {
@@ -26,19 +29,19 @@ class CartItem extends StatelessWidget {
       ),
       child: Row(
         children: <Widget>[
-          _cartCheckBtn(),
+          _cartCheckBtn( context, item ),
           _goodImage(),
           _goodsName(),
-          _goodPrice(),
+          _goodPrice( context, item ),
         ],
       ),
     );
   }
 
-  Widget _cartCheckBtn(){
+  Widget _cartCheckBtn( context, item ){
     return Container(
       child: Checkbox(
-        value: true,
+        value: item.ischeck,
         activeColor: Colors.pink,
         onChanged: ( bool val ){
 
@@ -65,21 +68,27 @@ class CartItem extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Text( item.goodsName ),
+          CartCount()
         ],
       ),
     );
   }
 
-  Widget _goodPrice(){
+  Widget _goodPrice( context, item ){
     return Container(
       width: ScreenUtil().setWidth(150),
       alignment: Alignment.centerRight,
+
       child: Column(
         children: <Widget>[
           Text("￥${ item.price }"),
           Container(
             child: InkWell(
-              onTap: (){},
+              onTap: (){
+
+                Provide.value<CartProvide>(context).deleteOneGoods( item.goodsId );
+                
+              },
               child: Icon(
                 Icons.delete_forever,
                 color: Colors.black26,

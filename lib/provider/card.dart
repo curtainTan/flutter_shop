@@ -11,6 +11,10 @@ class CartProvide with ChangeNotifier{
 
   List<CardInfoModal> cardList = [];
 
+  double allPrice =0 ;   //总价格
+  int allGoodsCount =0;  //商品总数量
+
+
   save( goodsId, goodsName, count, price, images ) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     cartString = prefs.getString("cartInfo");
@@ -33,7 +37,8 @@ class CartProvide with ChangeNotifier{
         'goodsName':goodsName,
         'count':count,
         'price':price,
-        'images':images
+        'images':images,
+        'ischeck': true
       };
       tempList.add( newGoods );
       cardList.add( CardInfoModal.fromJson( newGoods ) );
@@ -55,19 +60,75 @@ class CartProvide with ChangeNotifier{
   }
 
   getCartInfo() async {
+
+
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // cartString = prefs.getString("cartInfo");
+    // cardList = [];
+    // if( cartString == null ){
+    //   cardList = [];
+    // }else{
+    //   List<Map> tempList = ( json.decode( cartString.toString() ) as List ).cast();
+    //   tempList.forEach( (item){
+    //     cardList.add( CardInfoModal.fromJson(item) );
+    //   } );
+    // }
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    cartString = prefs.getString("cartInfo");
-    cardList = [];
-    if( cartString == null ){
-      cardList = [];
-    }else{
-      List<Map> tempList = ( json.decode( cartString.toString() ) as List ).cast();
-      tempList.forEach( (item){
-        cardList.add( CardInfoModal.fromJson(item) );
-      } );
-    }
+     //获得购物车中的商品,这时候是一个字符串
+     cartString=prefs.getString('cartInfo'); 
+     
+     //把cartList进行初始化，防止数据混乱 
+     cardList=[];
+     //判断得到的字符串是否有值，如果不判断会报错
+     if(cartString==null){
+       cardList=[];
+     }else{
+       List<Map> tempList= (json.decode(cartString.toString()) as List).cast();
+        //---------修改代码------start-------------
+       allPrice=0;
+       allGoodsCount=0;
+        //---------修改代码------end-------------
+       tempList.forEach((item){
+           //---------修改代码------start-------------
+          if(item['isCheck']){
+             allPrice+=(item['count']*item['price']);
+             allGoodsCount+=item['count'];
+          }
+           //---------修改代码------end-------------
+         
+        cardList.add(new CardInfoModal.fromJson(item));
+
+       });
+     }
     notifyListeners();
   }
+
+
+   //删除单个购物车商品
+  deleteOneGoods(String goodsId) async{
+     SharedPreferences prefs = await SharedPreferences.getInstance();
+     cartString=prefs.getString('cartInfo'); 
+     List<Map> tempList= (json.decode(cartString.toString()) as List).cast();
+   
+     int tempIndex =0;
+     int delIndex=0;
+     tempList.forEach((item){
+         
+         if(item['goodsId']==goodsId){
+          delIndex=tempIndex;
+        
+         }
+         tempIndex++;
+     });
+      tempList.removeAt(delIndex);
+      cartString= json.encode(tempList).toString();
+      prefs.setString('cartInfo', cartString);//
+      await getCartInfo();
+     
+
+  }
+
+
 
 
 

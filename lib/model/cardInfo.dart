@@ -4,9 +4,10 @@ class CardInfoModal {
   int count;
   double price;
   String images;
+  bool ischeck;
 
   CardInfoModal(
-      {this.goodsId, this.goodsName, this.count, this.price, this.images});
+      {this.goodsId, this.goodsName, this.count, this.price, this.images, this.ischeck});
 
   CardInfoModal.fromJson(Map<String, dynamic> json) {
     goodsId = json['goodsId'];
@@ -14,6 +15,7 @@ class CardInfoModal {
     count = json['count'];
     price = json['price'];
     images = json['images'];
+    ischeck = json['ischeck'];
   }
 
   Map<String, dynamic> toJson() {
@@ -23,6 +25,7 @@ class CardInfoModal {
     data['count'] = this.count;
     data['price'] = this.price;
     data['images'] = this.images;
+    data['ischeck'] = this.ischeck;
     return data;
   }
 }
