@@ -13,6 +13,7 @@ class CartProvide with ChangeNotifier{
 
   double allPrice =0 ;   //总价格
   int allGoodsCount =0;  //商品总数量
+  bool isAllChecked = true;  // 全部选中
 
 
   save( goodsId, goodsName, count, price, images ) async {
@@ -84,18 +85,17 @@ class CartProvide with ChangeNotifier{
        cardList=[];
      }else{
        List<Map> tempList= (json.decode(cartString.toString()) as List).cast();
-        //---------修改代码------start-------------
        allPrice=0;
        allGoodsCount=0;
-        //---------修改代码------end-------------
+       isAllChecked = true;
        tempList.forEach((item){
-           //---------修改代码------start-------------
           if(item['isCheck']){
              allPrice+=(item['count']*item['price']);
              allGoodsCount+=item['count'];
+          }else{
+            isAllChecked = false;
           }
-           //---------修改代码------end-------------
-         
+        
         cardList.add(new CardInfoModal.fromJson(item));
 
        });
@@ -128,6 +128,7 @@ class CartProvide with ChangeNotifier{
 
   }
 
+  // 选择单个按钮
   changeCheckState( CardInfoModal cartItem ) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     cartString=prefs.getString('cartInfo'); 
@@ -145,6 +146,28 @@ class CartProvide with ChangeNotifier{
     cartString = json.encode( tempList ).toString();
     prefs.setString("cartInfo", cartString);
     await getCartInfo();
+
+  }
+
+  // 全选按钮的点击
+  changeAllCheckState( bool isCheck ) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    cartString=prefs.getString('cartInfo'); 
+    List<Map> tempList= (json.decode(cartString.toString()) as List).cast();
+
+    List<Map> newList = [] ;
+
+    for( var item in tempList ){
+      var newItem = item;
+      newItem['ischeck'] = isCheck;
+      newList.add( newItem );
+    }
+
+
+    cartString = json.encode( newList ).toString();
+    prefs.setString("cartInfo", cartString);
+    await getCartInfo();
+    
 
   }
 
