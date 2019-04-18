@@ -44,7 +44,8 @@ class CartItem extends StatelessWidget {
         value: item.ischeck,
         activeColor: Colors.pink,
         onChanged: ( bool val ){
-
+          item.ischeck = val;
+          Provide.value<CartProvide>(context).changeCheckState( item );
         },
       ),
     );
@@ -87,7 +88,7 @@ class CartItem extends StatelessWidget {
               onTap: (){
 
                 Provide.value<CartProvide>(context).deleteOneGoods( item.goodsId );
-                
+
               },
               child: Icon(
                 Icons.delete_forever,
