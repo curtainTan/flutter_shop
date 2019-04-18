@@ -18,6 +18,7 @@ class CartPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("购物车"),
+        elevation: 0,
       ),
       body: FutureBuilder(
         future: _getCartInfo(context),
@@ -33,7 +34,7 @@ class CartPage extends StatelessWidget {
 
                 Provide<CartProvide>(
                   builder: ( context, child, childCategory ){
-                    // cartList= Provide.value<CartProvide>(context).cardList;
+                    cartList= Provide.value<CartProvide>(context).cardList;
 
                     return ListView.builder(
                       itemCount: cartList.length,
@@ -46,8 +47,8 @@ class CartPage extends StatelessWidget {
 
 
                 Positioned(
-                  bottom: 0,
-                  left: 0,
+                  bottom: 0.0,
+                  left: 0.0,
                   child: CartBottom(),
                 )
               ],

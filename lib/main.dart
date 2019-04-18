@@ -10,6 +10,8 @@ import './provider/category_goods_list.dart';
 import './route/application.dart';
 import './provider/details_info.dart';
 import './provider/card.dart';
+import './provider/currentIndex.dart';
+
 
 import './route/routes.dart';
 
@@ -24,12 +26,17 @@ void main(){
   var categoryGoodsList =CategoryGoodsProvide();
   var detailsInfoProvide =DetailsInfoProvide();
   var cart = CartProvide();
+  var currentIndex = CurrentIndexProvide();
+
+
   providers..provide( Provider<Counter>.value(counter) )
   ..provide( Provider<ChildCategory>.value(childcategory) )
   ..provide( Provider< CategoryGoodsProvide >.value( categoryGoodsList ) )
   ..provide( Provider< DetailsInfoProvide >.value( detailsInfoProvide ) )
   ..provide( Provider< CartProvide >.value( cart ) )
+  ..provide( Provider< CurrentIndexProvide >.value( currentIndex ) )
   ;
+
 
   runApp( ProviderNode( child: MyApp(), providers: providers, ) );
 }

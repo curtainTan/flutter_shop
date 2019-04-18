@@ -65,7 +65,7 @@ class CartBottom extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 width: ScreenUtil().setWidth(150),
                 child: Text(
-                  "￥${allPrice}",
+                  "￥$allPrice",
                   style: TextStyle( fontSize: ScreenUtil().setSp(36), color: Colors.red ),
                 ),
               )
@@ -78,7 +78,7 @@ class CartBottom extends StatelessWidget {
               "满10元免配送费，预购免配送费",
               style: TextStyle(
                 color: Colors.black38,
-                fontFamily: ScreenUtil().setSp(22)
+                fontSize: ScreenUtil().setSp(22)
               ),
             ),
           )
@@ -105,7 +105,7 @@ class CartBottom extends StatelessWidget {
              borderRadius: BorderRadius.circular(3.0)
           ),
           child: Text(
-            '结算(${allCount})',
+            '结算($allCount)',
             style: TextStyle(
               color: Colors.white
             ),

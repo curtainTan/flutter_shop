@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../provider/card.dart';
 import 'package:provide/provide.dart';
+
+
+import '../../provider/card.dart';
 import '../../provider/details_info.dart';
+import 'package:baixing/provider/currentIndex.dart';
+
 
 
 
@@ -25,13 +29,46 @@ class DetailBottom extends StatelessWidget {
       height: ScreenUtil().setHeight(80),
       child: Row(
         children: <Widget>[
-          InkWell(
-            onTap: (){},
-            child: Container(
-              width: ScreenUtil().setWidth(110),
-              alignment: Alignment.center,
-              child: Icon( Icons.shopping_cart, size: 35, color: Colors.red, ),
-            ),
+          Stack(
+            children: <Widget>[
+              InkWell(
+                onTap: (){
+                  Provide.value<CurrentIndexProvide>(context).changeIndex( 2 );
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  width: ScreenUtil().setWidth(110),
+                  alignment: Alignment.center,
+                  child: Icon( Icons.shopping_cart, size: 35, color: Colors.red, ),
+                ),
+              ),
+              Provide<CartProvide>(
+                builder: ( context, child, data ){
+                  return Positioned(
+                    right: 10,
+                    top: 0,
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
+                      decoration: BoxDecoration(
+                        color: Colors.pink,
+                        border: Border.all(
+                          width: 2,
+                          color: Colors.white
+                        ),
+                        borderRadius: BorderRadius.circular(15)
+                      ),
+                      child: Text(
+                        "${data.allGoodsCount}",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: ScreenUtil().setSp(22)
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              )
+            ],
           ),
           InkWell(
             onTap: () async {
