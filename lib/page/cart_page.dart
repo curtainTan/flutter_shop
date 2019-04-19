@@ -24,27 +24,31 @@ class CartPage extends StatelessWidget {
         future: _getCartInfo(context),
         builder: ( context, snapshot ){
 
-          print("-------cart_page重新渲染了......");
-
+          // print("-------cart_page重新渲染了......");
 
           if( snapshot.hasData ){
-            List cartList = Provide.value<CartProvide>(context).cardList;
+            List cartList = Provide.value<CartProvide>(context).cartList;
             return Stack(
               children: <Widget>[
 
                 Provide<CartProvide>(
                   builder: ( context, child, childCategory ){
-                    cartList= Provide.value<CartProvide>(context).cardList;
+                    // cartList= Provide.value<CartProvide>(context).cartList;
 
-                    return ListView.builder(
-                      itemCount: cartList.length,
-                      itemBuilder: ( context, index ){
-                        return CartItem( cartList[index] );
-                      },
-                    );
+                    if( childCategory.cartList.length == 0 ){
+                      return Center(
+                        child: Text("购物车是空的..."),
+                      );
+                    }else{
+                      return ListView.builder(
+                        itemCount: cartList.length,
+                        itemBuilder: ( context, index ){
+                          return CartItem( cartList[index] );
+                        },
+                      );
+                    }
                   },
                 ),
-
 
                 Positioned(
                   bottom: 0.0,

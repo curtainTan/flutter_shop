@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provide/provide.dart';
+
+import 'package:baixing/provider/card.dart';
 
 
 class CartCount extends StatelessWidget {
+
+  var item;
+  CartCount( this.item );
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -13,9 +21,9 @@ class CartCount extends StatelessWidget {
       ),
       child: Row(
         children: <Widget>[
-          _reduceBtn(),
+          _reduceBtn( context ),
           _countArea(),
-          _addBtn(),
+          _addBtn( context ),
         ],
       ),
       
@@ -23,9 +31,11 @@ class CartCount extends StatelessWidget {
   }
 
   // 减少按钮
-  Widget _reduceBtn(){
+  Widget _reduceBtn( context ){
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        Provide.value<CartProvide>(context).addOrReduceAction(item,'reduce');
+      },
       child: Container(
         width: ScreenUtil().setWidth(45),
         height: ScreenUtil().setHeight(45),
@@ -43,9 +53,11 @@ class CartCount extends StatelessWidget {
   }
 
   //添加按钮
-  Widget _addBtn(){
+  Widget _addBtn( context ){
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        Provide.value<CartProvide>(context).addOrReduceAction(item,'add');
+      },
       child: Container(
         width: ScreenUtil().setWidth(45),
         height: ScreenUtil().setHeight(45),
@@ -63,13 +75,13 @@ class CartCount extends StatelessWidget {
   }
 
   //中间数量显示区域
-  Widget _countArea(){
+  Widget _countArea(  ){
     return Container(
       width: ScreenUtil().setWidth(70),
       height: ScreenUtil().setHeight(45),
       alignment: Alignment.center,
       color: Colors.white,
-       child: Text('1'),
+       child: Text('${ item.count }'),
     );
   }
 
