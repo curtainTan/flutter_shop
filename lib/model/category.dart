@@ -32,6 +32,7 @@ class Data {
   String mallCategoryName;
   List<BxMallSubDto> bxMallSubDto;
   Null comments;
+
   String image;
 
   Data(
